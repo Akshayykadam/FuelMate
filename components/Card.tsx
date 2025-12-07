@@ -1,0 +1,113 @@
+import React from 'react';
+import { StyleSheet, View, ViewStyle, Text, TouchableOpacity, Platform } from 'react-native';
+import Colors from '@/constants/colors';
+import { ChevronRight } from 'lucide-react-native';
+
+interface CardProps {
+  children: React.ReactNode;
+  style?: ViewStyle;
+  onPress?: () => void;
+  title?: string;
+  subtitle?: string;
+  footer?: React.ReactNode;
+  showArrow?: boolean;
+}
+
+const Card: React.FC<CardProps> = ({
+  children,
+  style,
+  onPress,
+  title,
+  subtitle,
+  footer,
+  showArrow = false,
+}) => {
+  const CardComponent = onPress ? TouchableOpacity : View;
+
+  return (
+    <CardComponent
+      style={[styles.card, style]}
+      onPress={onPress}
+      activeOpacity={onPress ? 0.7 : 1}
+    >
+      {(title || subtitle) && (
+        <View style={styles.header}>
+          <View style={styles.headerTextContainer}>
+            {title && <Text style={styles.title}>{title}</Text>}
+            {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+          </View>
+          {showArrow && (
+            <ChevronRight size={20} color={Colors.dark.textSecondary} />
+          )}
+        </View>
+      )}
+      
+      <View style={styles.content}>
+        {children}
+      </View>
+      
+      {footer && (
+        <View style={styles.footer}>
+          {footer}
+        </View>
+      )}
+    </CardComponent>
+  );
+};
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: Colors.dark.card,
+    borderRadius: 24,
+    padding: 16,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: Colors.dark.border,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  headerTextContainer: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.dark.text,
+    marginBottom: 2,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: Colors.dark.textSecondary,
+  },
+  content: {
+    flex: 1,
+  },
+  footer: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: Colors.dark.border,
+  },
+});
+
+export default Card;
