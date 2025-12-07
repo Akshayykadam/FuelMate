@@ -18,6 +18,6 @@ export default {
     warning: '#26dfd0', // Using Gold for warning
     danger: '#f62aa0', // Using Hot Pink for danger
     info: '#26dfd0', // Using Teal for info
-    chartColors: ['#26dfd0', '#f62aa0', '#0e4f49ff', '#1a9e94', '#AF52DE', '#0e4f49ff', '#34AADC'],
+    chartColors: ['#26dfd0', '#f62aa0', '#7f8180ff', '#1a9e94', '#AF52DE', '#6d6d6dff', '#34AADC'],
   }
 };

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 24,
     borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.3)', // Gold border with transparency
+    borderColor: 'rgba(38, 223, 208, 0.15)', // Gold border with transparency
   },
   image: {
     width: 200,

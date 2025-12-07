@@ -103,20 +103,7 @@ export default function ExpensesScreen() {
         <FuelButton onPress={handleAddFuel} />
       </View>
 
-      <Card style={styles.summaryCard}>
-        <View style={styles.summaryContent}>
-          <View>
-            <Text style={styles.summaryLabel}>Total Spent</Text>
-            <Text style={styles.summaryValue}>
-              {formatCurrency(totalSpent, settings.currency)}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.summaryLabel}>Entries</Text>
-            <Text style={styles.summaryValue}>{filteredEntries.length}</Text>
-          </View>
-        </View>
-      </Card>
+
 
       {vehicles.length > 1 && (
         <View style={styles.filterContainer}>

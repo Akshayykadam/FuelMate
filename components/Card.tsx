@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle, Text, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, ViewStyle, StyleProp, Text, TouchableOpacity, Platform } from 'react-native';
 import Colors from '@/constants/colors';
 import { ChevronRight } from 'lucide-react-native';
 
 interface CardProps {
   children: React.ReactNode;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   onPress?: () => void;
   title?: string;
   subtitle?: string;
@@ -41,11 +41,11 @@ const Card: React.FC<CardProps> = ({
           )}
         </View>
       )}
-      
+
       <View style={styles.content}>
         {children}
       </View>
-      
+
       {footer && (
         <View style={styles.footer}>
           {footer}

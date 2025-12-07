@@ -29,8 +29,14 @@ export default function HomeScreen() {
   }, [vehicles]);
 
   const selectedVehicle = vehicles.find(v => v.id === selectedVehicleId) || null;
-  const latestEntry = selectedVehicle ? getLatestEntryByVehicleId(selectedVehicle.id) : null;
-  const previousEntry = latestEntry ? getPreviousEntryByVehicleId(selectedVehicle?.id || '', latestEntry.id) : null;
+
+  // Derive latest and previous entry directly from the reactive entries array
+  const vehicleEntries = selectedVehicle
+    ? entries.filter(e => e.vehicleId === selectedVehicle.id).sort((a, b) => b.date - a.date)
+    : [];
+
+  const latestEntry = vehicleEntries.length > 0 ? vehicleEntries[0] : null;
+  const previousEntry = vehicleEntries.length > 1 ? vehicleEntries[1] : null;
 
   const efficiency = latestEntry && previousEntry
     ? calculateFuelEfficiency(latestEntry, previousEntry, settings.distanceUnit, settings.volumeUnit)
@@ -175,7 +181,16 @@ export default function HomeScreen() {
 
         {selectedVehicle && latestEntry && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Fuel Statistics</Text>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Fuel Statistics</Text>
+              <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => router.push('/monthly-stats' as any)}
+              >
+                <TrendingUp size={18} color={Colors.dark.tint} />
+                <Text style={styles.addButtonText}>View Report</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.statsGrid}>
               <View style={styles.statsRow}>
                 <View style={styles.statTile}>
@@ -213,7 +228,7 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={styles.statTile}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(184, 238, 48, 0.15)' }]}>
+                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(43, 243, 239, 0.54)' }]}>
                     <Car size={24} color={Colors.dark.neonGreen} />
                   </View>
                   <Text style={styles.statValue}>
@@ -382,7 +397,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 8,
     borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.3)', // Gold border with transparency
+    borderColor: 'rgba(38, 223, 208, 0.15)', // Gold border with transparency
   },
   statValue: {
     fontSize: 18,

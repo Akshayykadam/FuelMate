@@ -1,12 +1,14 @@
 export type Vehicle = {
   id: string;
   name: string;
-  type: 'petrol' | 'diesel' | 'electric' | 'hybrid' | 'cng' | 'bike';
+  type: 'petrol' | 'diesel' | 'electric' | 'hybrid' | 'cng' | 'bike' | 'petrol_cng';
+  vehicleClass?: 'car' | 'bike';
   make: string;
   model: string;
   year: number;
   image?: string;
   tankCapacity?: number; // in liters
+  cngTankCapacity?: number; // in kg
   batteryCapacity?: number; // in kWh for electric vehicles
   initialOdometer: number;
   createdAt: number;
@@ -60,4 +62,15 @@ export type FuelEfficiency = {
   date: number;
   efficiency: number; // km/l, mi/gal, km/kWh
   cost: number; // cost per distance unit
+};
+
+export type MonthlyStats = {
+  month: string;
+  year: number;
+  totalCost: number;
+  totalFuel: number;
+  totalDistance: number;
+  efficiency: number | null;
+  costPerDistance: number | null;
+  timestamp: number;
 };

@@ -10,16 +10,17 @@ import Card from '@/components/Card';
 import Button, { FuelButton } from '@/components/Button';
 import FuelEntryCard from '@/components/FuelEntryCard';
 import EmptyState from '@/components/EmptyState';
+import ConfirmationModal from '@/components/ConfirmationModal';
 import { calculateFuelEfficiency, formatCurrency, formatDistance, formatVolume, getAverageFuelEfficiency } from '@/utils/calculations';
 import { formatDate, sortByDate } from '@/utils/helpers';
-import { 
-  Car, 
-  Droplet, 
-  Edit2, 
-  Info, 
-  MoreVertical, 
-  Trash2, 
-  TrendingUp, 
+import {
+  Car,
+  Droplet,
+  Edit2,
+  Info,
+  MoreVertical,
+  Trash2,
+  TrendingUp,
   Wallet,
   Zap,
   BatteryCharging,
@@ -32,69 +33,62 @@ export default function VehicleDetailsScreen() {
   const { vehicles, getVehicleById, deleteVehicle } = useVehicleStore();
   const { entries, getEntriesByVehicleId, deleteEntry } = useFuelEntryStore();
   const { settings } = useSettingsStore();
-  
-  const [vehicle, setVehicle] = useState(getVehicleById(id));
-  const [vehicleEntries, setVehicleEntries] = useState(getEntriesByVehicleId(id));
-  
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const vehicle = vehicles.find(v => v.id === id);
+  const vehicleEntries = entries.filter(e => e.vehicleId === id).sort((a, b) => b.date - a.date);
+
   useEffect(() => {
-    setVehicle(getVehicleById(id));
-    setVehicleEntries(sortByDate(getEntriesByVehicleId(id)));
-  }, [id, vehicles, entries]);
-  
+    if (!vehicle) {
+      router.replace('/vehicles' as any);
+    }
+  }, [vehicle]);
+
   if (!vehicle) {
-    router.replace('/vehicles' as any);
     return null;
   }
-  
+
   const handleAddFuel = () => {
     router.push('/add-fuel' as any);
   };
-  
+
   const handleViewFuelDetails = (entryId: string) => {
     router.push(`/fuel-details/${entryId}` as any);
   };
-  
+
   const handleDeleteVehicle = () => {
-    Alert.alert(
-      'Delete Vehicle',
-      `Are you sure you want to delete ${vehicle.name}? This will also delete all fuel entries for this vehicle.`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Delete', 
-          style: 'destructive',
-          onPress: () => {
-            try {
-              // Delete all fuel entries for this vehicle first
-              vehicleEntries.forEach(entry => {
-                deleteEntry(entry.id);
-              });
-              
-              // Then delete the vehicle
-              deleteVehicle(vehicle.id);
-              
-              // Navigate back to home screen
-              router.replace('/');
-            } catch (error) {
-              console.error('Error deleting vehicle:', error);
-              Alert.alert('Error', 'Failed to delete vehicle. Please try again.');
-            }
-          }
-        },
-      ]
-    );
+    setShowDeleteModal(true);
   };
-  
+
+  const confirmDelete = () => {
+    try {
+      // Delete all fuel entries for this vehicle first
+      vehicleEntries.forEach(entry => {
+        deleteEntry(entry.id);
+      });
+
+      // Then delete the vehicle
+      deleteVehicle(vehicle.id);
+
+      // Navigate back to home screen
+      router.replace('/');
+    } catch (error) {
+      console.error('Error deleting vehicle:', error);
+      Alert.alert('Error', 'Failed to delete vehicle. Please try again.');
+    }
+    setShowDeleteModal(false);
+  };
+
   const averageEfficiency = getAverageFuelEfficiency(
     vehicleEntries,
     vehicle.id,
     settings.distanceUnit,
     settings.volumeUnit
   );
-  
+
   const totalSpent = vehicleEntries.reduce((sum, entry) => sum + entry.totalCost, 0);
   const totalVolume = vehicleEntries.reduce((sum, entry) => sum + entry.amount, 0);
-  
+
   const getVehicleTypeLabel = () => {
     switch (vehicle.type) {
       case 'petrol': return 'Petrol';
@@ -102,18 +96,25 @@ export default function VehicleDetailsScreen() {
       case 'electric': return 'Electric';
       case 'hybrid': return 'Hybrid';
       case 'cng': return 'CNG';
-      case 'bike': return 'Bike';
+      case 'petrol_cng': return 'Petrol + CNG';
+      case 'bike': return 'Motorcycle';
       default: return 'Unknown';
     }
   };
 
   const getVehicleTypeIcon = () => {
+    // Use vehicleClass if available, otherwise fallback to type for backward compatibility
+    if (vehicle.vehicleClass === 'bike') {
+      return <Bike size={20} color={Colors.dark.hotPink} />;
+    }
+
     switch (vehicle.type) {
-      case 'electric': 
+      case 'electric':
         return <Zap size={20} color={Colors.dark.aqua} />;
       case 'hybrid':
         return <BatteryCharging size={20} color={Colors.dark.neonGreen} />;
       case 'cng':
+      case 'petrol_cng':
         return <Wind size={20} color={Colors.dark.tint} />;
       case 'bike':
         return <Bike size={20} color={Colors.dark.hotPink} />;
@@ -126,9 +127,10 @@ export default function VehicleDetailsScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['bottom']}>
-      <Stack.Screen 
+      <Stack.Screen
         options={{
           title: vehicle.name,
+
           headerRight: () => (
             <TouchableOpacity onPress={handleDeleteVehicle} style={styles.headerButton}>
               <Trash2 size={20} color={Colors.dark.danger} />
@@ -136,17 +138,17 @@ export default function VehicleDetailsScreen() {
           ),
         }}
       />
-      
+
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.vehicleHeader}>
           {vehicle.image ? (
             <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} />
           ) : (
             <View style={styles.vehicleImagePlaceholder}>
-              {vehicle.type === 'bike' ? <Bike size={48} color={Colors.dark.text} /> : <Car size={48} color={Colors.dark.text} />}
+              {(vehicle.vehicleClass === 'bike' || vehicle.type === 'bike') ? <Bike size={48} color={Colors.dark.text} /> : <Car size={48} color={Colors.dark.text} />}
             </View>
           )}
-          
+
           <View style={styles.vehicleInfo}>
             <Text style={styles.vehicleName}>{vehicle.name}</Text>
             <Text style={styles.vehicleDetails}>
@@ -158,7 +160,7 @@ export default function VehicleDetailsScreen() {
             </View>
           </View>
         </View>
-        
+
         <Card style={styles.detailsCard}>
           <View style={styles.detailsRow}>
             <View style={styles.detailItem}>
@@ -167,7 +169,7 @@ export default function VehicleDetailsScreen() {
                 {formatDistance(vehicle.initialOdometer, settings.distanceUnit)}
               </Text>
             </View>
-            
+
             {vehicle.tankCapacity && (
               <View style={styles.detailItem}>
                 <Text style={styles.detailLabel}>Tank Capacity</Text>
@@ -176,7 +178,16 @@ export default function VehicleDetailsScreen() {
                 </Text>
               </View>
             )}
-            
+
+            {vehicle.cngTankCapacity && (
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>CNG Capacity</Text>
+                <Text style={styles.detailValue}>
+                  {vehicle.cngTankCapacity} kg
+                </Text>
+              </View>
+            )}
+
             {vehicle.batteryCapacity && (
               <View style={styles.detailItem}>
                 <Text style={styles.detailLabel}>Battery Capacity</Text>
@@ -187,14 +198,14 @@ export default function VehicleDetailsScreen() {
             )}
           </View>
         </Card>
-        
+
         <View style={styles.actionButtons}>
-          <FuelButton 
+          <FuelButton
             onPress={handleAddFuel}
             style={styles.actionButton}
           />
         </View>
-        
+
         {vehicleEntries.length > 0 ? (
           <>
             <View style={styles.section}>
@@ -211,7 +222,7 @@ export default function VehicleDetailsScreen() {
                     Avg. {settings.distanceUnit}/{settings.volumeUnit}
                   </Text>
                 </View>
-                
+
                 <View style={styles.statItem}>
                   <View style={[styles.statIconContainer, { backgroundColor: 'rgba(246, 42, 160, 0.15)' }]}>
                     <Wallet size={24} color={Colors.dark.hotPink} />
@@ -221,7 +232,7 @@ export default function VehicleDetailsScreen() {
                   </Text>
                   <Text style={styles.statLabel}>Total Spent</Text>
                 </View>
-                
+
                 <View style={styles.statItem}>
                   <View style={[styles.statIconContainer, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
                     <Droplet size={24} color={Colors.dark.aqua} />
@@ -231,7 +242,7 @@ export default function VehicleDetailsScreen() {
                   </Text>
                   <Text style={styles.statLabel}>Total Volume</Text>
                 </View>
-                
+
                 <View style={styles.statItem}>
                   <View style={[styles.statIconContainer, { backgroundColor: 'rgba(184, 238, 48, 0.15)' }]}>
                     <Info size={24} color={Colors.dark.neonGreen} />
@@ -243,7 +254,7 @@ export default function VehicleDetailsScreen() {
                 </View>
               </View>
             </View>
-            
+
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Fuel History</Text>
               {vehicleEntries.map(entry => (
@@ -265,6 +276,16 @@ export default function VehicleDetailsScreen() {
           />
         )}
       </ScrollView>
+
+      <ConfirmationModal
+        visible={showDeleteModal}
+        title="Delete Vehicle"
+        message={`Are you sure you want to delete ${vehicle.name}? This will also delete all fuel entries for this vehicle.`}
+        confirmLabel="Delete"
+        variant="danger"
+        onConfirm={confirmDelete}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </SafeAreaView>
   );
 }

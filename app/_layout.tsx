@@ -61,12 +61,20 @@ function RootLayoutNav() {
           fontWeight: '600',
         },
         headerShadowVisible: false,
+
         contentStyle: {
           backgroundColor: Colors.dark.background,
         },
       }}
     >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerShown: false,
+          title: 'Back',
+          headerBackTitle: 'Back'
+        }}
+      />
       <Stack.Screen
         name="add-vehicle"
         options={{

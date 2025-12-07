@@ -17,12 +17,12 @@ interface FuelEntryCardProps {
 const FuelEntryCard: React.FC<FuelEntryCardProps> = ({ entry, onPress }) => {
   const { settings } = useSettingsStore();
   const { getVehicleById } = useVehicleStore();
-  
+
   const vehicle = getVehicleById(entry.vehicleId);
-  
+
   const getFuelTypeLabel = () => {
     if (vehicle?.type === 'electric') return 'Electricity';
-    
+
     switch (entry.fuelType) {
       case 'regular': return 'Regular';
       case 'premium': return 'Premium';
@@ -51,7 +51,7 @@ const FuelEntryCard: React.FC<FuelEntryCardProps> = ({ entry, onPress }) => {
             {getFuelIcon()}
           </View>
         </View>
-        
+
         <View style={styles.infoContainer}>
           <View style={styles.headerRow}>
             <Text style={styles.date}>{formatDate(entry.date)}</Text>
@@ -59,50 +59,50 @@ const FuelEntryCard: React.FC<FuelEntryCardProps> = ({ entry, onPress }) => {
               {formatCurrency(entry.totalCost, settings.currency)}
             </Text>
           </View>
-          
+
           <View style={styles.detailsContainer}>
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Vehicle</Text>
               <Text style={styles.detailValue}>{vehicle?.name || 'Unknown'}</Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Amount</Text>
               <Text style={styles.detailValue}>
                 {formatVolume(entry.amount, settings.volumeUnit)}
               </Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Price</Text>
               <Text style={styles.detailValue}>
                 {formatCurrency(entry.price, settings.currency)}/{settings.volumeUnit}
               </Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Odometer</Text>
               <Text style={styles.detailValue}>
                 {formatDistance(entry.odometer, settings.distanceUnit)}
               </Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Type</Text>
               <Text style={styles.detailValue}>{getFuelTypeLabel()}</Text>
             </View>
-            
+
             {entry.isFull && (
               <View style={styles.fullTankBadge}>
                 <Text style={styles.fullTankText}>Full Tank</Text>
               </View>
             )}
           </View>
-          
+
           {entry.notes && (
             <Text style={styles.notes}>{entry.notes}</Text>
           )}
-          
+
           {entry.receiptImage && (
             <View style={styles.receiptContainer}>
               <Receipt size={16} color={Colors.dark.textSecondary} />
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.3)', // Gold border with transparency
+    borderColor: 'rgba(38, 223, 208, 0.15)', // Gold border with transparency
   },
   infoContainer: {
     flex: 1,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   fullTankBadge: {
-    backgroundColor: 'rgba(184, 238, 48, 0.3)', // Neon green with transparency
+    backgroundColor: 'rgba(43, 243, 239, 0.54)',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,

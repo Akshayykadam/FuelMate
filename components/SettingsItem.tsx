@@ -30,7 +30,7 @@ export const SettingsItem: React.FC<SettingsItemProps> = ({
     if (rightElement) {
       return rightElement;
     }
-    
+
     if (isSwitch) {
       return (
         <Switch
@@ -41,11 +41,11 @@ export const SettingsItem: React.FC<SettingsItemProps> = ({
         />
       );
     }
-    
+
     if (showArrow && onPress) {
       return <ChevronRight size={20} color={Colors.dark.textSecondary} />;
     }
-    
+
     return null;
   };
 
@@ -65,7 +65,7 @@ export const SettingsItem: React.FC<SettingsItemProps> = ({
           {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
       </View>
-      
+
       <View style={styles.rightContainer}>
         {renderRightElement()}
       </View>
@@ -93,12 +93,12 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(173, 255, 47, 0.15)',
+    backgroundColor: 'rgba(43, 243, 239, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
     borderWidth: 1,
-    borderColor: 'rgba(173, 255, 47, 0.3)',
+    borderColor: 'rgba(43, 243, 239, 0.15)',
   },
   textContainer: {
     flex: 1,
