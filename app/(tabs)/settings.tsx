@@ -33,7 +33,7 @@ export default function SettingsScreen() {
   const { settings, setCurrency, setDistanceUnit, setVolumeUnit, setUserName, setUserImage } = useSettingsStore();
   const { vehicles, deleteVehicle } = useVehicleStore();
   const { entries, deleteEntry } = useFuelEntryStore();
-  
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState(settings.userName || '');
 
@@ -88,14 +88,14 @@ export default function SettingsScreen() {
   const handleProfileNameChange = () => {
     setIsEditingName(true);
   };
-  
+
   const handleSaveName = () => {
     if (nameInput.trim()) {
       setUserName(nameInput.trim());
     }
     setIsEditingName(false);
   };
-  
+
   const handleCancelNameEdit = () => {
     setNameInput(settings.userName || '');
     setIsEditingName(false);
@@ -119,19 +119,19 @@ export default function SettingsScreen() {
       'This will permanently delete all your vehicles, fuel entries, and expenses. This action cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Reset', 
+        {
+          text: 'Reset',
           style: 'destructive',
           onPress: () => {
             // Reset all data by deleting all entries and vehicles
             entries.forEach(entry => {
               deleteEntry(entry.id);
             });
-            
+
             vehicles.forEach(vehicle => {
               deleteVehicle(vehicle.id);
             });
-            
+
             Alert.alert('Success', 'All data has been reset.');
           }
         },
@@ -149,7 +149,7 @@ export default function SettingsScreen() {
       'CAD': 'Canadian Dollar (C$)',
       'AUD': 'Australian Dollar (A$)',
     };
-    
+
     return labels[currency] || currency;
   };
 
@@ -162,14 +162,14 @@ export default function SettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={[]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
           <Text style={styles.title}>Settings</Text>
         </View>
 
         <View style={styles.profileSection}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.profileImageContainer}
             onPress={handlePickImage}
           >
@@ -184,7 +184,7 @@ export default function SettingsScreen() {
               <Camera size={16} color="#FFFFFF" />
             </View>
           </TouchableOpacity>
-          
+
           {isEditingName ? (
             <View style={styles.nameEditContainer}>
               <TextInput
@@ -196,14 +196,14 @@ export default function SettingsScreen() {
                 autoFocus
               />
               <View style={styles.nameEditButtons}>
-                <TouchableOpacity 
-                  style={styles.nameEditButton} 
+                <TouchableOpacity
+                  style={styles.nameEditButton}
                   onPress={handleCancelNameEdit}
                 >
                   <X size={20} color={Colors.dark.danger} />
                 </TouchableOpacity>
-                <TouchableOpacity 
-                  style={styles.nameEditButton} 
+                <TouchableOpacity
+                  style={styles.nameEditButton}
                   onPress={handleSaveName}
                 >
                   <Check size={20} color={Colors.dark.success} />
@@ -215,7 +215,7 @@ export default function SettingsScreen() {
               <Text style={styles.profileName}>
                 {settings.userName || 'Set your name'}
               </Text>
-              
+
               <Button
                 title={settings.userName ? "Change Name" : "Set Name"}
                 onPress={handleProfileNameChange}
@@ -270,19 +270,19 @@ export default function SettingsScreen() {
               icon={<Info size={24} color={Colors.dark.tint} />}
               title="About FuelMate"
               subtitle="Version 1.0.0"
-              onPress={() => {}}
+              onPress={() => { }}
             />
             <SettingsItem
               icon={<HelpCircle size={24} color={Colors.dark.tint} />}
               title="Help & Support"
               subtitle="Get help with the app"
-              onPress={() => {}}
+              onPress={() => { }}
             />
             <SettingsItem
               icon={<Heart size={24} color={Colors.dark.tint} />}
               title="Made with Love"
               subtitle="Thanks for using our app!"
-              onPress={() => {}}
+              onPress={() => { }}
             />
           </View>
         </View>
@@ -311,7 +311,8 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
   },
   title: {
     fontSize: 28,

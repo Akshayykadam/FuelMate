@@ -36,7 +36,7 @@ export default function VehiclesScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={[]}>
       <View style={styles.header}>
         <Text style={styles.title}>Your Vehicles</Text>
         <AddButton onPress={handleAddVehicle} />
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
   },
   title: {
     fontSize: 24,

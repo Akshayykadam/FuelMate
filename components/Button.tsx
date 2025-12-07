@@ -128,7 +128,7 @@ export const FuelButton: React.FC<Omit<ButtonProps, 'icon' | 'title'>> = (props)
   );
 };
 
-const sizeStyles = {
+const sizeStyles: Record<ButtonSize, ViewStyle> = {
   small: {
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -158,7 +158,7 @@ const textSizeStyles = {
   },
 };
 
-const variantStyles = {
+const variantStyles: Record<ButtonVariant, ViewStyle> = {
   primary: {
     backgroundColor: Colors.dark.tint,
     borderWidth: 2,
@@ -184,7 +184,7 @@ const variantStyles = {
   },
 };
 
-const variantTextStyles = {
+const variantTextStyles: Record<ButtonVariant, TextStyle> = {
   primary: {
     color: '#FFFFFF', // White text on teal background
     fontWeight: '700',
