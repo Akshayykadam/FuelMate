@@ -59,29 +59,7 @@ export default function HomeScreen() {
   };
 
   const handleOpenMaps = () => {
-    const searchQuery = 'petrol pump near me';
-    const encodedQuery = encodeURIComponent(searchQuery);
-
-    // Different URL schemes for iOS and Android
-    const url = Platform.select({
-      ios: `maps:?q=${encodedQuery}`,
-      android: `geo:0,0?q=${encodedQuery}`,
-      default: `https://www.google.com/maps/search/${encodedQuery}`,
-    });
-
-    Linking.canOpenURL(url!)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(url!);
-        } else {
-          // Fallback to Google Maps web
-          Linking.openURL(`https://www.google.com/maps/search/${encodedQuery}`);
-        }
-      })
-      .catch((err) => {
-        console.error('Error opening maps:', err);
-        Alert.alert('Error', 'Could not open maps app');
-      });
+    router.push('/map' as any);
   };
 
   // Get greeting based on time of day
@@ -273,31 +251,6 @@ export default function HomeScreen() {
                 </View>
               </View>
             </View>
-          </View>
-        )}
-
-        {vehicles.length > 1 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Your Vehicles</Text>
-            {vehicles.map(vehicle => (
-              vehicle.id !== selectedVehicleId && (
-                <VehicleCard
-                  key={vehicle.id}
-                  vehicle={vehicle}
-                  onPress={() => {
-                    selectVehicle(vehicle.id);
-                    handleViewVehicleDetails(vehicle.id);
-                  }}
-                />
-              )
-            ))}
-            <Button
-              title="Add New Vehicle"
-              onPress={handleAddVehicle}
-              variant="outline"
-              icon={<Plus size={18} color={Colors.dark.tint} />}
-              style={styles.addVehicleButton}
-            />
           </View>
         )}
       </ScrollView>
