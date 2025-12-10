@@ -186,7 +186,7 @@ export default function AddVehicleScreen() {
               style={[styles.typeButton, styles.vehicleClassButton, vehicleClass === 'bike' && styles.typeButtonSelected]}
               onPress={() => handleClassSelect('bike')}
             >
-              <Bike size={20} color={vehicleClass === 'bike' ? '#FFFFFF' : Colors.dark.text} style={{ marginRight: 10 }} />
+              <Bike size={20} color={vehicleClass === 'bike' ? Colors.dark.background : Colors.dark.text} style={{ marginRight: 10 }} />
               <Text style={[styles.typeButtonText, vehicleClass === 'bike' && styles.typeButtonTextSelected]}>
                 Motorcycle
               </Text>
@@ -196,7 +196,7 @@ export default function AddVehicleScreen() {
               style={[styles.typeButton, styles.vehicleClassButton, vehicleClass === 'car' && styles.typeButtonSelected]}
               onPress={() => handleClassSelect('car')}
             >
-              <Car size={20} color={vehicleClass === 'car' ? '#FFFFFF' : Colors.dark.text} style={{ marginRight: 10 }} />
+              <Car size={20} color={vehicleClass === 'car' ? Colors.dark.background : Colors.dark.text} style={{ marginRight: 10 }} />
               <Text style={[styles.typeButtonText, vehicleClass === 'car' && styles.typeButtonTextSelected]}>
                 Car
               </Text>
@@ -290,7 +290,7 @@ export default function AddVehicleScreen() {
             title="Add Vehicle"
             onPress={handleSubmit}
             variant="primary"
-            icon={vehicleClass === 'bike' ? <Bike size={18} color="#FFFFFF" /> : <Car size={18} color="#FFFFFF" />}
+            icon={vehicleClass === 'bike' ? <Bike size={18} color={Colors.dark.background} /> : <Car size={18} color={Colors.dark.background} />}
             fullWidth
           />
         </View>
@@ -391,8 +391,8 @@ const styles = StyleSheet.create({
     flexBasis: 0, // Force them to start at 0 width so they grow equally regardless of content
   },
   typeButtonSelected: {
-    backgroundColor: Colors.dark.tint,
-    borderColor: '#1a9e94',
+    backgroundColor: Colors.dark.text,
+    borderColor: Colors.dark.text,
   },
   typeButtonText: {
     color: Colors.dark.text,
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   typeButtonTextSelected: {
-    color: '#FFFFFF',
+    color: Colors.dark.background,
   },
   buttonContainer: {
     marginTop: 16,

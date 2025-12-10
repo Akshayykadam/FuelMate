@@ -1,23 +1,22 @@
 export default {
-  // Dark theme
+  // Ultra-minimal Charcoal & Warm White Theme (Notion-like)
   dark: {
-    background: '#121212', // Dark background
-    card: '#1E1E1E',
-    cardAlt: '#252525',
-    text: '#FFFFFF', // White text
-    textSecondary: '#AAAAAA',
-    border: '#333333', // Dark border
-    tint: '#26dfd0', // Teal accent (primary)
-    hotPink: '#f62aa0', // Hot Pink accent
-    neonGreen: '#26dfd0', // Neon Green accent
-    aqua: '#26dfd0', // Aqua accent (same as tint now)
-    darkTeal: '#1a9e94', // Dark Teal accent (secondary)
-    tabIconDefault: '#777777',
-    tabIconSelected: '#26dfd0', // Teal for selected tab
-    success: '#26dfd0', // Using Neon Green for success
-    warning: '#26dfd0', // Using Gold for warning
-    danger: '#f62aa0', // Using Hot Pink for danger
-    info: '#26dfd0', // Using Teal for info
-    chartColors: ['#26dfd0', '#f62aa0', '#7f8180ff', '#1a9e94', '#AF52DE', '#6d6d6dff', '#34AADC'],
+    background: '#18181B', // Charcoal background
+    card: '#27272A', // Zinc card
+    cardAlt: '#3F3F46', // Lighter zinc for nested elements
+    text: '#FAFAFA', // Near-white text
+    textSecondary: '#A1A1AA', // Muted zinc text
+    textMuted: '#71717A', // Even more muted
+    border: '#3F3F46', // Subtle zinc border
+    tint: '#FAFAFA', // Warm white accent (primary)
+    accent: '#E4E4E7', // Slightly off-white
+    secondary: '#D4D4D8', // Light gray
+    tabIconDefault: '#71717A',
+    tabIconSelected: '#FAFAFA',
+    success: '#4ADE80', // Soft green
+    warning: '#FBBF24', // Warm amber
+    danger: '#F87171', // Soft red
+    info: '#A1A1AA', // Muted gray for info
+    chartColors: ['#FAFAFA', '#A1A1AA', '#71717A', '#4ADE80', '#FBBF24', '#F87171', '#D4D4D8'],
   }
 };

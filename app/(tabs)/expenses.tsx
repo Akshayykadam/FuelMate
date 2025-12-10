@@ -97,7 +97,7 @@ export default function ExpensesScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={[]}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
         <Text style={styles.title}>Fuel Expenses</Text>
         <FuelButton onPress={handleAddFuel} />
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingTop: 16,
     paddingBottom: 16,
   },
   title: {
@@ -226,14 +226,14 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   filterButtonActive: {
-    backgroundColor: Colors.dark.tint,
+    backgroundColor: Colors.dark.text,
   },
   filterButtonText: {
     color: Colors.dark.text,
     fontWeight: '500',
   },
   filterButtonTextActive: {
-    color: '#FFFFFF',
+    color: Colors.dark.background,
   },
   listContent: {
     paddingHorizontal: 16,

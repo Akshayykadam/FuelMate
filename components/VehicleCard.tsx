@@ -18,36 +18,36 @@ interface VehicleCardProps {
 const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onPress, selected = false }) => {
   const { settings } = useSettingsStore();
   const { entries, getLatestEntryByVehicleId, getPreviousEntryByVehicleId } = useFuelEntryStore();
-  
+
   const latestEntry = getLatestEntryByVehicleId(vehicle.id);
   const previousEntry = latestEntry ? getPreviousEntryByVehicleId(vehicle.id, latestEntry.id) : undefined;
-  
+
   const efficiency = latestEntry && previousEntry
     ? calculateFuelEfficiency(latestEntry, previousEntry, settings.distanceUnit, settings.volumeUnit)
     : null;
-  
+
   const getVehicleIcon = () => {
     switch (vehicle.type) {
       case 'electric':
-        return <Zap size={24} color={Colors.dark.aqua} />;
+        return <Zap size={24} color={Colors.dark.tint} />;
       case 'hybrid':
-        return <BatteryCharging size={24} color={Colors.dark.neonGreen} />;
+        return <BatteryCharging size={24} color={Colors.dark.accent} />;
       case 'cng':
-        return <Wind size={24} color={Colors.dark.tint} />;
+        return <Wind size={24} color={Colors.dark.secondary} />;
       case 'bike':
-        return <Bike size={24} color={Colors.dark.hotPink} />;
+        return <Bike size={24} color={Colors.dark.tint} />;
       default:
         return <Droplet size={24} color={Colors.dark.tint} />;
     }
   };
-  
+
   const getEfficiencyLabel = () => {
     if (!efficiency) return 'No data';
-    
+
     if (vehicle.type === 'electric') {
       return `${efficiency} ${settings.distanceUnit}/kWh`;
     }
-    
+
     return `${efficiency} ${settings.distanceUnit}/${settings.volumeUnit}`;
   };
 
@@ -69,25 +69,25 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onPress, selected = 
             </View>
           )}
         </View>
-        
+
         <View style={styles.infoContainer}>
           <Text style={styles.vehicleName}>{vehicle.name}</Text>
           <Text style={styles.vehicleDetails}>
             {vehicle.make} {vehicle.model} {vehicle.year}
           </Text>
-          
+
           {latestEntry ? (
             <View style={styles.statsContainer}>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Last Refill</Text>
                 <Text style={styles.statValue}>{formatDate(latestEntry.date)}</Text>
               </View>
-              
+
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Efficiency</Text>
                 <Text style={styles.statValue}>{getEfficiencyLabel()}</Text>
               </View>
-              
+
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Odometer</Text>
                 <Text style={styles.statValue}>
@@ -99,7 +99,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onPress, selected = 
             <Text style={styles.noDataText}>No fuel entries yet</Text>
           )}
         </View>
-        
+
         <View style={styles.typeContainer}>
           {getVehicleIcon()}
         </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   selectedCard: {
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: Colors.dark.tint,
   },
   container: {
@@ -128,19 +128,15 @@ const styles = StyleSheet.create({
   vehicleImage: {
     width: 60,
     height: 60,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
+    borderRadius: 12,
   },
   vehicleIconContainer: {
     width: 60,
     height: 60,
-    borderRadius: 16,
+    borderRadius: 12,
     backgroundColor: Colors.dark.cardAlt,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   infoContainer: {
     flex: 1,

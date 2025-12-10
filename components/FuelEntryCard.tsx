@@ -35,10 +35,10 @@ const FuelEntryCard: React.FC<FuelEntryCardProps> = ({ entry, onPress }) => {
 
   const getFuelIcon = () => {
     if (entry.fuelType === 'electricity' || vehicle?.type === 'electric') {
-      return <Zap size={24} color={Colors.dark.aqua} />;
+      return <Zap size={24} color={Colors.dark.accent} />;
     }
     if (entry.fuelType === 'cng' || vehicle?.type === 'cng') {
-      return <Wind size={24} color={Colors.dark.neonGreen} />;
+      return <Wind size={24} color={Colors.dark.secondary} />;
     }
     return <Droplet size={24} color={Colors.dark.tint} />;
   };
@@ -123,14 +123,12 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   icon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: 'rgba(38, 223, 208, 0.15)', // Gold with transparency
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: 'rgba(250, 250, 250, 0.08)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.15)', // Gold border with transparency
   },
   infoContainer: {
     flex: 1,
@@ -172,13 +170,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   fullTankBadge: {
-    backgroundColor: 'rgba(43, 243, 239, 0.54)',
+    backgroundColor: 'rgba(34, 197, 94, 0.15)',
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: 8,
     alignSelf: 'flex-start',
-    borderWidth: 1,
-    borderColor: Colors.dark.success,
   },
   fullTankText: {
     fontSize: 12,

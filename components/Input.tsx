@@ -129,10 +129,10 @@ const Input: React.FC<InputProps> = ({
   return (
     <View style={styles.wrapper}>
       {label && <Text style={styles.label}>{label}</Text>}
-      
+
       <View style={getContainerStyle()}>
         {leftIcon && <View style={styles.leftIconContainer}>{leftIcon}</View>}
-        
+
         <TextInput
           style={getInputStyle()}
           value={value}
@@ -151,10 +151,10 @@ const Input: React.FC<InputProps> = ({
           autoFocus={autoFocus}
           selectionColor={Colors.dark.tint}
         />
-        
+
         {renderPasswordToggle()}
         {renderClearButton()}
-        
+
         {rightIcon && !secureTextEntry && !(clearable && value) && (
           <TouchableOpacity
             style={styles.rightIconContainer}
@@ -165,7 +165,7 @@ const Input: React.FC<InputProps> = ({
           </TouchableOpacity>
         )}
       </View>
-      
+
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
@@ -178,9 +178,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Colors.dark.border,
-    borderRadius: 20,
+    borderRadius: 12,
     backgroundColor: Colors.dark.cardAlt,
     overflow: 'hidden',
   },

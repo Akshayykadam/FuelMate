@@ -160,15 +160,16 @@ export default function AddFuelScreen() {
   const selectedVehicle = vehicles.find(v => v.id === vehicleId);
 
   const getVehicleIcon = (vehicle: Vehicle) => {
+    const iconColor = vehicleId === vehicle.id ? Colors.dark.background : Colors.dark.text;
     switch (vehicle.type) {
       case 'electric':
-        return <Zap size={20} color={vehicleId === vehicle.id ? '#FFFFFF' : Colors.dark.text} />;
+        return <Zap size={20} color={iconColor} />;
       case 'hybrid':
-        return <BatteryCharging size={20} color={vehicleId === vehicle.id ? '#FFFFFF' : Colors.dark.text} />;
+        return <BatteryCharging size={20} color={iconColor} />;
       case 'cng':
-        return <Wind size={20} color={vehicleId === vehicle.id ? '#FFFFFF' : Colors.dark.text} />;
+        return <Wind size={20} color={iconColor} />;
       default:
-        return <Car size={20} color={vehicleId === vehicle.id ? '#FFFFFF' : Colors.dark.text} />;
+        return <Car size={20} color={iconColor} />;
     }
   };
 
@@ -347,7 +348,7 @@ export default function AddFuelScreen() {
             title="Add Fuel Entry"
             onPress={handleSubmit}
             variant="primary"
-            icon={<Droplet size={18} color="#FFFFFF" />}
+            icon={<Droplet size={18} color={Colors.dark.background} />}
             fullWidth
           />
         </View>
@@ -401,7 +402,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   vehicleButtonSelected: {
-    backgroundColor: Colors.dark.tint,
+    backgroundColor: Colors.dark.text,
   },
   vehicleButtonText: {
     color: Colors.dark.text,
@@ -409,7 +410,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   vehicleButtonTextSelected: {
-    color: '#FFFFFF',
+    color: Colors.dark.background,
   },
   row: {
     flexDirection: 'row',
@@ -433,14 +434,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   typeButtonSelected: {
-    backgroundColor: Colors.dark.tint,
+    backgroundColor: Colors.dark.text,
   },
   typeButtonText: {
     color: Colors.dark.text,
     fontWeight: '500',
   },
   typeButtonTextSelected: {
-    color: '#FFFFFF',
+    color: Colors.dark.background,
   },
   switchContainer: {
     flexDirection: 'row',
@@ -506,7 +507,7 @@ const styles = StyleSheet.create({
   summaryValue: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.dark.tint,
+    color: Colors.dark.text,
   },
   buttonContainer: {
     marginTop: 16,

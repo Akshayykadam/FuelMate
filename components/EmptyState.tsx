@@ -45,15 +45,13 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   iconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: 'rgba(38, 223, 208, 0.15)', // Gold with transparency
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: 'rgba(250, 250, 250, 0.08)',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
-    borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.15)', // Gold border with transparency
   },
   image: {
     width: 200,

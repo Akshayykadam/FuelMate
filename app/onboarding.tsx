@@ -27,21 +27,21 @@ const slides = [
     id: 3,
     title: 'Track Fuel Expenses',
     description: 'Log every fuel refill to track your spending and consumption over time.',
-    icon: <Droplet size={80} color={Colors.dark.aqua} />,
+    icon: <Droplet size={80} color={Colors.dark.tint} />,
     image: 'https://images.unsplash.com/photo-1596461010918-e512160d8a07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
   },
   {
     id: 4,
     title: 'Analyze Efficiency',
     description: 'Get insights into your fuel efficiency and cost per distance traveled.',
-    icon: <TrendingUp size={80} color={Colors.dark.neonGreen} />,
+    icon: <TrendingUp size={80} color={Colors.dark.accent} />,
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
   },
   {
     id: 5,
     title: 'Made with Love',
     description: 'We hope you enjoy using FuelMate! Start tracking your fuel expenses now.',
-    icon: <Heart size={80} color={Colors.dark.hotPink} />,
+    icon: <Heart size={80} color={Colors.dark.danger} />,
     image: 'https://images.unsplash.com/photo-1590424693420-7ec2743a69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
   },
 ];
@@ -194,22 +194,18 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginBottom: 32,
-    width: 160,
-    height: 160,
-    borderRadius: 80,
-    backgroundColor: 'rgba(38, 223, 208, 0.15)', // Gold with transparency
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: 'rgba(250, 250, 250, 0.08)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: 'rgba(38, 223, 208, 0.3)', // Gold border with transparency
   },
   slideImage: {
     width: 280,
     height: 200,
-    borderRadius: 24,
+    borderRadius: 16,
     marginBottom: 32,
-    borderWidth: 3,
-    borderColor: Colors.dark.border,
   },
   title: {
     fontSize: 28,

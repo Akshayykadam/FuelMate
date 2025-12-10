@@ -107,7 +107,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={[]}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -144,16 +144,43 @@ export default function HomeScreen() {
 
         {selectedVehicle && (
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Current Vehicle</Text>
+            {/* Vehicle Tabs Row */}
+            <View style={styles.vehicleTabsRow}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.vehicleTabs}
+                contentContainerStyle={styles.vehicleTabsContent}
+              >
+                {vehicles.map((vehicle) => (
+                  <TouchableOpacity
+                    key={vehicle.id}
+                    style={[
+                      styles.vehicleTab,
+                      vehicle.id === selectedVehicleId && styles.vehicleTabActive,
+                    ]}
+                    onPress={() => selectVehicle(vehicle.id)}
+                  >
+                    <Text
+                      style={[
+                        styles.vehicleTabText,
+                        vehicle.id === selectedVehicleId && styles.vehicleTabTextActive,
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {vehicle.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
               <TouchableOpacity
-                style={styles.addButton}
+                style={styles.addVehicleIconButton}
                 onPress={handleAddVehicle}
               >
-                <Plus size={18} color={Colors.dark.tint} />
-                <Text style={styles.addButtonText}>Add New</Text>
+                <Plus size={20} color={Colors.dark.text} />
               </TouchableOpacity>
             </View>
+
             <VehicleCard
               vehicle={selectedVehicle}
               onPress={() => handleViewVehicleDetails(selectedVehicle.id)}
@@ -184,57 +211,65 @@ export default function HomeScreen() {
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Fuel Statistics</Text>
               <TouchableOpacity
-                style={styles.addButton}
+                style={styles.viewReportButton}
                 onPress={() => router.push('/monthly-stats' as any)}
               >
-                <TrendingUp size={18} color={Colors.dark.tint} />
-                <Text style={styles.addButtonText}>View Report</Text>
+                <Text style={styles.viewReportText}>View Report</Text>
+                <TrendingUp size={14} color={Colors.dark.textSecondary} />
               </TouchableOpacity>
             </View>
-            <View style={styles.statsGrid}>
-              <View style={styles.statsRow}>
-                <View style={styles.statTile}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
-                    <TrendingUp size={24} color={Colors.dark.tint} />
+
+            <View style={styles.statsCard}>
+              <View style={styles.statsCardRow}>
+                <View style={styles.statItem}>
+                  <View style={styles.statHeader}>
+                    <TrendingUp size={16} color={Colors.dark.success} />
+                    <Text style={styles.statItemLabel}>Efficiency</Text>
                   </View>
-                  <Text style={styles.statValue}>
+                  <Text style={styles.statItemValue}>
                     {efficiency ? `${efficiency}` : 'N/A'}
-                  </Text>
-                  <Text style={styles.statLabel}>
-                    {efficiency ? `${settings.distanceUnit}/${settings.volumeUnit}` : 'Efficiency'}
+                    <Text style={styles.statItemUnit}>
+                      {efficiency ? ` ${settings.distanceUnit}/${settings.volumeUnit}` : ''}
+                    </Text>
                   </Text>
                 </View>
 
-                <View style={styles.statTile}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(246, 42, 160, 0.15)' }]}>
-                    <Wallet size={24} color={Colors.dark.hotPink} />
+                <View style={styles.statDivider} />
+
+                <View style={styles.statItem}>
+                  <View style={styles.statHeader}>
+                    <Wallet size={16} color={Colors.dark.warning} />
+                    <Text style={styles.statItemLabel}>Last Price</Text>
                   </View>
-                  <Text style={styles.statValue}>
+                  <Text style={styles.statItemValue}>
                     {formatCurrency(latestEntry.price, settings.currency)}
                   </Text>
-                  <Text style={styles.statLabel}>Last Price</Text>
                 </View>
               </View>
 
-              <View style={styles.statsRow}>
-                <View style={styles.statTile}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
-                    <Droplet size={24} color={Colors.dark.aqua} />
+              <View style={styles.statsCardDividerHorizontal} />
+
+              <View style={styles.statsCardRow}>
+                <View style={styles.statItem}>
+                  <View style={styles.statHeader}>
+                    <Droplet size={16} color={Colors.dark.info} />
+                    <Text style={styles.statItemLabel}>Last Amount</Text>
                   </View>
-                  <Text style={styles.statValue}>
+                  <Text style={styles.statItemValue}>
                     {formatVolume(latestEntry.amount, settings.volumeUnit)}
                   </Text>
-                  <Text style={styles.statLabel}>Last Amount</Text>
                 </View>
 
-                <View style={styles.statTile}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(43, 243, 239, 0.54)' }]}>
-                    <Car size={24} color={Colors.dark.neonGreen} />
+                <View style={styles.statDivider} />
+
+                <View style={styles.statItem}>
+                  <View style={styles.statHeader}>
+                    <Car size={16} color={Colors.dark.textSecondary} />
+                    <Text style={styles.statItemLabel}>Odometer</Text>
                   </View>
-                  <Text style={styles.statValue}>
+                  <Text style={styles.statItemValue}>
                     {formatDistance(latestEntry.odometer, settings.distanceUnit)}
                   </Text>
-                  <Text style={styles.statLabel}>Odometer</Text>
                 </View>
               </View>
             </View>
@@ -283,7 +318,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.OS === 'ios' ? 32 : 24,
   },
   headerContainer: {
-    marginTop: 8,
+    paddingTop: 16,
     marginBottom: 16,
   },
   header: {
@@ -298,11 +333,11 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   profileImageContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 46,
+    height: 46,
+    borderRadius: 23,
     overflow: 'hidden',
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: Colors.dark.tint,
   },
   profileImage: {
@@ -315,14 +350,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   mapButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(38, 223, 208, 0.15)',
+    width: 42,
+    height: 42,
+    borderRadius: 12,
+    backgroundColor: 'rgba(250, 250, 250, 0.06)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: Colors.dark.tint,
   },
   section: {
     marginBottom: 20,
@@ -342,10 +375,10 @@ const styles = StyleSheet.create({
   addButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(38, 223, 208, 0.15)', // Gold with transparency
+    backgroundColor: 'rgba(250, 250, 250, 0.06)',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 16,
+    borderRadius: 10,
   },
   addButtonText: {
     color: Colors.dark.tint,
@@ -365,15 +398,8 @@ const styles = StyleSheet.create({
   },
   statsGrid: {
     backgroundColor: Colors.dark.card,
-    borderRadius: 24,
+    borderRadius: 16,
     padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   statsRow: {
     flexDirection: 'row',
@@ -383,21 +409,17 @@ const styles = StyleSheet.create({
   statTile: {
     width: '48%',
     backgroundColor: Colors.dark.cardAlt,
-    borderRadius: 20,
-    padding: 16,
+    borderRadius: 12,
+    padding: 14,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   statIconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
-    borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.15)', // Gold border with transparency
   },
   statValue: {
     fontSize: 18,
@@ -410,5 +432,98 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.dark.textSecondary,
     textAlign: 'center',
+  },
+  // New stats card styles
+  viewReportButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  viewReportText: {
+    fontSize: 13,
+    color: Colors.dark.textSecondary,
+    fontWeight: '500',
+  },
+  statsCard: {
+    backgroundColor: Colors.dark.card,
+    borderRadius: 16,
+    padding: 16,
+  },
+  statsCardRow: {
+    flexDirection: 'row',
+  },
+  statsCardDividerHorizontal: {
+    height: 1,
+    backgroundColor: Colors.dark.border,
+    marginVertical: 14,
+  },
+  statItem: {
+    flex: 1,
+  },
+  statHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6,
+  },
+  statItemLabel: {
+    fontSize: 12,
+    color: Colors.dark.textSecondary,
+    fontWeight: '500',
+  },
+  statItemValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: Colors.dark.text,
+  },
+  statItemUnit: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: Colors.dark.textSecondary,
+  },
+  statDivider: {
+    width: 1,
+    backgroundColor: Colors.dark.border,
+    marginHorizontal: 16,
+  },
+  vehicleTabsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  vehicleTabs: {
+    flex: 1,
+    marginHorizontal: -4,
+  },
+  vehicleTabsContent: {
+    paddingHorizontal: 4,
+  },
+  addVehicleIconButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.dark.cardAlt,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 8,
+  },
+  vehicleTab: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: Colors.dark.cardAlt,
+    marginRight: 8,
+  },
+  vehicleTabActive: {
+    backgroundColor: Colors.dark.text,
+  },
+  vehicleTabText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: Colors.dark.textSecondary,
+  },
+  vehicleTabTextActive: {
+    color: Colors.dark.background,
+    fontWeight: '600',
   },
 });

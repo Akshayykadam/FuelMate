@@ -119,13 +119,11 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: Colors.dark.card,
-        borderRadius: 24,
-        padding: 32,
+        borderRadius: 16,
+        padding: 28,
         width: '100%',
         maxWidth: 340,
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: Colors.dark.border,
         overflow: 'hidden',
     },
     iconContainer: {

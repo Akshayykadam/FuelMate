@@ -14,18 +14,11 @@ export default function TabLayout() {
         tabBarInactiveTintColor: Colors.dark.tabIconDefault,
         tabBarStyle: {
           backgroundColor: Colors.dark.card,
-          borderTopColor: Colors.dark.border,
-          borderTopWidth: 2,
+          borderTopColor: 'rgba(51, 65, 85, 0.3)',
+          borderTopWidth: 1,
           height: 60 + insets.bottom,
           paddingBottom: insets.bottom + 8,
           paddingTop: 8,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-          elevation: 5,
         },
         headerStyle: {
           backgroundColor: Colors.dark.background,
@@ -44,7 +37,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
+          title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
         }}
       />
@@ -52,6 +46,7 @@ export default function TabLayout() {
         name="vehicles"
         options={{
           title: "Vehicles",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <Car size={size} color={color} />,
         }}
       />
@@ -59,6 +54,7 @@ export default function TabLayout() {
         name="expenses"
         options={{
           title: "Expenses",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <BarChart2 size={size} color={color} />,
         }}
       />
@@ -66,6 +62,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: "Settings",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <Settings size={size} color={color} />,
         }}
       />

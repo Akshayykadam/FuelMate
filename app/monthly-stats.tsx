@@ -92,7 +92,7 @@ export default function MonthlyStatsScreen() {
 
                                 <View style={styles.statsRow}>
                                     <View style={styles.statItem}>
-                                        <View style={[styles.iconBox, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
+                                        <View style={[styles.iconBox, { backgroundColor: 'rgba(250, 250, 250, 0.08)' }]}>
                                             <TrendingUp size={16} color={Colors.dark.tint} />
                                         </View>
                                         <View>
@@ -106,8 +106,8 @@ export default function MonthlyStatsScreen() {
                                     </View>
 
                                     <View style={styles.statItem}>
-                                        <View style={[styles.iconBox, { backgroundColor: 'rgba(246, 42, 160, 0.15)' }]}>
-                                            <Wallet size={16} color={Colors.dark.hotPink} />
+                                        <View style={[styles.iconBox, { backgroundColor: 'rgba(161, 161, 170, 0.12)' }]}>
+                                            <Wallet size={16} color={Colors.dark.accent} />
                                         </View>
                                         <View>
                                             <Text style={styles.statValue}>
@@ -122,8 +122,8 @@ export default function MonthlyStatsScreen() {
 
                                 <View style={[styles.statsRow, { marginTop: 12 }]}>
                                     <View style={styles.statItem}>
-                                        <View style={[styles.iconBox, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
-                                            <Droplet size={16} color={Colors.dark.neonGreen} />
+                                        <View style={[styles.iconBox, { backgroundColor: 'rgba(250, 250, 250, 0.08)' }]}>
+                                            <Droplet size={16} color={Colors.dark.tint} />
                                         </View>
                                         <View>
                                             <Text style={styles.statValue}>
@@ -211,10 +211,8 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: Colors.dark.card,
-        borderRadius: 20,
+        borderRadius: 16,
         padding: 16,
-        borderWidth: 1,
-        borderColor: Colors.dark.border,
     },
     cardHeader: {
         flexDirection: 'row',
@@ -228,16 +226,14 @@ const styles = StyleSheet.create({
         color: Colors.dark.text,
     },
     costBadge: {
-        backgroundColor: 'rgba(246, 42, 160, 0.15)',
+        backgroundColor: 'rgba(250, 250, 250, 0.08)',
         paddingHorizontal: 10,
         paddingVertical: 4,
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: 'rgba(246, 42, 160, 0.3)',
+        borderRadius: 10,
     },
     costText: {
-        color: Colors.dark.hotPink,
-        fontWeight: '700',
+        color: Colors.dark.tint,
+        fontWeight: '600',
         fontSize: 14,
     },
     divider: {
@@ -258,7 +254,7 @@ const styles = StyleSheet.create({
     iconBox: {
         width: 32,
         height: 32,
-        borderRadius: 16,
+        borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
     },

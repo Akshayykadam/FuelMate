@@ -105,19 +105,19 @@ export default function VehicleDetailsScreen() {
   const getVehicleTypeIcon = () => {
     // Use vehicleClass if available, otherwise fallback to type for backward compatibility
     if (vehicle.vehicleClass === 'bike') {
-      return <Bike size={20} color={Colors.dark.hotPink} />;
+      return <Bike size={20} color={Colors.dark.tint} />;
     }
 
     switch (vehicle.type) {
       case 'electric':
-        return <Zap size={20} color={Colors.dark.aqua} />;
+        return <Zap size={20} color={Colors.dark.accent} />;
       case 'hybrid':
-        return <BatteryCharging size={20} color={Colors.dark.neonGreen} />;
+        return <BatteryCharging size={20} color={Colors.dark.secondary} />;
       case 'cng':
       case 'petrol_cng':
         return <Wind size={20} color={Colors.dark.tint} />;
       case 'bike':
-        return <Bike size={20} color={Colors.dark.hotPink} />;
+        return <Bike size={20} color={Colors.dark.tint} />;
       case 'diesel':
       case 'petrol':
       default:
@@ -210,47 +210,55 @@ export default function VehicleDetailsScreen() {
           <>
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Statistics</Text>
-              <View style={styles.statsGrid}>
-                <View style={styles.statItem}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
-                    <TrendingUp size={24} color={Colors.dark.tint} />
+              <View style={styles.statsCard}>
+                <View style={styles.statsCardRow}>
+                  <View style={styles.statsCardItem}>
+                    <View style={styles.statsCardHeader}>
+                      <TrendingUp size={16} color={Colors.dark.success} />
+                      <Text style={styles.statsCardLabel}>Avg. {settings.distanceUnit}/{settings.volumeUnit}</Text>
+                    </View>
+                    <Text style={styles.statsCardValue}>
+                      {averageEfficiency ? `${averageEfficiency}` : 'N/A'}
+                    </Text>
                   </View>
-                  <Text style={styles.statValue}>
-                    {averageEfficiency ? `${averageEfficiency}` : 'N/A'}
-                  </Text>
-                  <Text style={styles.statLabel}>
-                    Avg. {settings.distanceUnit}/{settings.volumeUnit}
-                  </Text>
+
+                  <View style={styles.statsDivider} />
+
+                  <View style={styles.statsCardItem}>
+                    <View style={styles.statsCardHeader}>
+                      <Wallet size={16} color={Colors.dark.warning} />
+                      <Text style={styles.statsCardLabel}>Total Spent</Text>
+                    </View>
+                    <Text style={styles.statsCardValue}>
+                      {formatCurrency(totalSpent, settings.currency)}
+                    </Text>
+                  </View>
                 </View>
 
-                <View style={styles.statItem}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(246, 42, 160, 0.15)' }]}>
-                    <Wallet size={24} color={Colors.dark.hotPink} />
-                  </View>
-                  <Text style={styles.statValue}>
-                    {formatCurrency(totalSpent, settings.currency)}
-                  </Text>
-                  <Text style={styles.statLabel}>Total Spent</Text>
-                </View>
+                <View style={styles.statsDividerHorizontal} />
 
-                <View style={styles.statItem}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(38, 223, 208, 0.15)' }]}>
-                    <Droplet size={24} color={Colors.dark.aqua} />
+                <View style={styles.statsCardRow}>
+                  <View style={styles.statsCardItem}>
+                    <View style={styles.statsCardHeader}>
+                      <Droplet size={16} color={Colors.dark.info} />
+                      <Text style={styles.statsCardLabel}>Total Volume</Text>
+                    </View>
+                    <Text style={styles.statsCardValue}>
+                      {formatVolume(totalVolume, settings.volumeUnit)}
+                    </Text>
                   </View>
-                  <Text style={styles.statValue}>
-                    {formatVolume(totalVolume, settings.volumeUnit)}
-                  </Text>
-                  <Text style={styles.statLabel}>Total Volume</Text>
-                </View>
 
-                <View style={styles.statItem}>
-                  <View style={[styles.statIconContainer, { backgroundColor: 'rgba(184, 238, 48, 0.15)' }]}>
-                    <Info size={24} color={Colors.dark.neonGreen} />
+                  <View style={styles.statsDivider} />
+
+                  <View style={styles.statsCardItem}>
+                    <View style={styles.statsCardHeader}>
+                      <Info size={16} color={Colors.dark.textSecondary} />
+                      <Text style={styles.statsCardLabel}>Entries</Text>
+                    </View>
+                    <Text style={styles.statsCardValue}>
+                      {vehicleEntries.length}
+                    </Text>
                   </View>
-                  <Text style={styles.statValue}>
-                    {vehicleEntries.length}
-                  </Text>
-                  <Text style={styles.statLabel}>Entries</Text>
                 </View>
               </View>
             </View>
@@ -312,21 +320,17 @@ const styles = StyleSheet.create({
   vehicleImage: {
     width: 80,
     height: 80,
-    borderRadius: 16,
+    borderRadius: 12,
     marginRight: 16,
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   vehicleImagePlaceholder: {
     width: 80,
     height: 80,
-    borderRadius: 16,
+    borderRadius: 12,
     backgroundColor: Colors.dark.cardAlt,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   vehicleInfo: {
     flex: 1,
@@ -399,22 +403,18 @@ const styles = StyleSheet.create({
   statItem: {
     width: '48%',
     backgroundColor: Colors.dark.card,
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 16,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   statIconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
-    borderWidth: 2,
-    borderColor: 'rgba(38, 223, 208, 0.3)', // Gold border with transparency
   },
   statValue: {
     fontSize: 18,
@@ -426,5 +426,43 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.dark.textSecondary,
     textAlign: 'center',
+  },
+  // New clean stats card styles
+  statsCard: {
+    backgroundColor: Colors.dark.card,
+    borderRadius: 16,
+    padding: 16,
+  },
+  statsCardRow: {
+    flexDirection: 'row',
+  },
+  statsCardItem: {
+    flex: 1,
+  },
+  statsCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6,
+  },
+  statsCardLabel: {
+    fontSize: 12,
+    color: Colors.dark.textSecondary,
+    fontWeight: '500',
+  },
+  statsCardValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: Colors.dark.text,
+  },
+  statsDivider: {
+    width: 1,
+    backgroundColor: Colors.dark.border,
+    marginHorizontal: 16,
+  },
+  statsDividerHorizontal: {
+    height: 1,
+    backgroundColor: Colors.dark.border,
+    marginVertical: 14,
   },
 });

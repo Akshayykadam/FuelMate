@@ -93,7 +93,7 @@ const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'primary' ? '#FFFFFF' : Colors.dark.tint}
+          color={variant === 'primary' ? Colors.dark.background : Colors.dark.text}
         />
       ) : (
         <View style={styles.contentContainer}>
@@ -110,7 +110,7 @@ export const AddButton: React.FC<Omit<ButtonProps, 'icon' | 'title'>> = (props) 
   return (
     <Button
       {...props}
-      icon={<Plus size={18} color="#FFFFFF" />}
+      icon={<Plus size={18} color={Colors.dark.background} />}
       title="Add"
       variant="primary"
     />
@@ -121,7 +121,7 @@ export const FuelButton: React.FC<Omit<ButtonProps, 'icon' | 'title'>> = (props)
   return (
     <Button
       {...props}
-      icon={<Droplet size={18} color="#FFFFFF" />}
+      icon={<Droplet size={18} color={Colors.dark.background} />}
       title="Add Fuel"
       variant="primary"
     />
@@ -132,17 +132,17 @@ const sizeStyles: Record<ButtonSize, ViewStyle> = {
   small: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   medium: {
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 24,
+    borderRadius: 12,
   },
   large: {
     paddingVertical: 16,
     paddingHorizontal: 24,
-    borderRadius: 28,
+    borderRadius: 14,
   },
 };
 
@@ -160,24 +160,18 @@ const textSizeStyles = {
 
 const variantStyles: Record<ButtonVariant, ViewStyle> = {
   primary: {
-    backgroundColor: Colors.dark.tint,
-    borderWidth: 2,
-    borderColor: '#1a9e94', // Slightly darker teal for border
+    backgroundColor: Colors.dark.text, // White background for primary CTA
   },
   secondary: {
     backgroundColor: Colors.dark.cardAlt,
-    borderWidth: 2,
-    borderColor: Colors.dark.border,
   },
   outline: {
     backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: Colors.dark.tint,
+    borderWidth: 1.5,
+    borderColor: Colors.dark.textSecondary,
   },
   danger: {
     backgroundColor: Colors.dark.danger,
-    borderWidth: 2,
-    borderColor: '#d6248a', // Slightly darker hot pink for border
   },
   ghost: {
     backgroundColor: 'transparent',
@@ -186,20 +180,20 @@ const variantStyles: Record<ButtonVariant, ViewStyle> = {
 
 const variantTextStyles: Record<ButtonVariant, TextStyle> = {
   primary: {
-    color: '#FFFFFF', // White text on teal background
-    fontWeight: '700',
+    color: Colors.dark.background, // Dark text on white button
+    fontWeight: '600',
   },
   secondary: {
     color: Colors.dark.text,
     fontWeight: '600',
   },
   outline: {
-    color: Colors.dark.tint,
+    color: Colors.dark.text,
     fontWeight: '600',
   },
   danger: {
     color: '#FFFFFF',
-    fontWeight: '700',
+    fontWeight: '600',
   },
   ghost: {
     color: Colors.dark.text,
